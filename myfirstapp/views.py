@@ -1,13 +1,23 @@
-from django.shortcuts import render
-
-# Create your views here.
-users_list = []
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-def hello(request):
-    return render(request, 'hello.html')
+class MyVie(APIView):
+    def get(self, *args, **kwargs):
+        params = self.request.query_params
+        print(params)
+        return Response({'msg': 'Hello from GET'})
 
+    def post(self, *args, **kwargs):
+        data = self.request.data
+        print(data)
+        return Response({'msg': 'Hello from POST'})
 
-def users(request, name):
-    users_list.append(name)
-    return render(request, 'users.html', {'name': name, 'users': users_list})
+    def put(self, *args, **kwargs):
+        return Response({'msg': 'Hello from PUT'})
+
+    def putch(self, *args, **kwargs):
+        return Response({'msg': 'Hello from PUTCH'})
+
+    def delete(self, *args, **kwargs):
+        return Response({'msg': 'Hello from DELETE'})
