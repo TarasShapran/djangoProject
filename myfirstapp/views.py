@@ -1,41 +1,48 @@
+from django.forms import model_to_dict
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .utils import DBtest
+from .models import CarModel
 
 
 class UserListCreateView(APIView):
     def get(self, *args, **kwargs):
-        users = DBtest.read_db()
-        return Response(users, status.HTTP_200_OK)
+        cars = CarModel.objects.all().values()
+        return Response(cars, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
-        user = self.request.data
-        new_user = DBtest.create(user)
-        return Response(new_user, status.HTTP_201_CREATED)
+        data = self.request.data
+        car = CarModel.objects.create(**data)
+        return Response(model_to_dict(car), status.HTTP_201_CREATED)
 
 
 class UserRetrieveUpdateDestroyView(APIView):
     def get(self, *args, **kwargs):
         pk = kwargs.get('pk')
-        users = DBtest.read_db()
-        for user in users:
-            if user.get('id') == pk:
-                return Response(user, status.HTTP_200_OK)
-        return Response('User with id not found', status.HTTP_404_NOT_FOUND)
+        exists = CarModel.objects.filter(pk=pk).exists()
+        if not exists:
+            return Response('Car with id not found', status.HTTP_404_NOT_FOUND)
+
+        car = CarModel.objects.get(pk=pk)
+        return Response(model_to_dict(car), status.HTTP_200_OK)
 
     def patch(self, *args, **kwargs):
         pk = kwargs.get('pk')
         data = self.request.data
-        user = DBtest.update(data, pk)
-        if not user:
-            return Response('User with id not found', status.HTTP_404_NOT_FOUND)
-        return Response(user, status.HTTP_200_OK)
+        exists = CarModel.objects.filter(pk=pk).exists()
+        if not exists:
+            return Response('Car with id not found', status.HTTP_404_NOT_FOUND)
+        CarModel.objects.filter(pk=pk).update(**data)
+
+        return Response('car updated', status.HTTP_200_OK)
 
     def delete(self, *args, **kwargs):
         pk = kwargs.get('pk')
-        is_delete = DBtest.delete(pk)
-        if not is_delete:
-            return Response('User with id not found', status.HTTP_404_NOT_FOUND)
+        exists = CarModel.objects.filter(pk=pk).exists()
+        if not exists:
+            return Response('Car with id not found', status.HTTP_404_NOT_FOUND)
+
+        car = CarModel.objects.filter(pk=pk)
+        car.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
