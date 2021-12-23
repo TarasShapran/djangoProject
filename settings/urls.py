@@ -1,4 +1,4 @@
-"""djangoProject URL Configuration
+"""settings URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -14,11 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from myfirstapp.views import UserListCreateView,UserRetrieveUpdateDestroyView
+from django.urls import path,include
+from cars.views import CarsListCreateView,CarsRetrieveUpdateDestroyView
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('cars', UserListCreateView.as_view()),
-    path('cars/<int:pk>', UserRetrieveUpdateDestroyView.as_view())
-]
+    path('admin/', admin.site.urls),
+    path('cars', include('cars.urls'))
+ ]
