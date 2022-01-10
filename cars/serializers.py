@@ -8,6 +8,9 @@ class CarSerializer(ModelSerializer):
     class Meta:
         model = CarModel
         fields = '__all__'
+        extra_kwargs = {
+            'autopark': {'read_only': True}
+        }
 
     def validate(self, data):
         if data.get('model' == data.get('brand')):

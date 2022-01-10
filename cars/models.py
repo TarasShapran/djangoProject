@@ -1,6 +1,8 @@
 from django.db import models
 from django.core import validators as V
 
+from autopark.models import AutoParkModel
+
 
 # Create your models here.
 
@@ -22,6 +24,7 @@ class CarModel(models.Model):
             V.MinValueValidator(1970),
             V.MaxValueValidator(2021)
         ])
+    autopark = models.ForeignKey(AutoParkModel, on_delete=models.CASCADE, related_name='cars')
 
     def __str__(self):
         return self.brand
