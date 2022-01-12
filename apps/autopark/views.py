@@ -1,15 +1,16 @@
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from apps.cars.serializers import CarSerializer
+from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
 
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
-from cars.serializers import CarSerializer
-
 
 # Create your views here.
 
 class AutoParkListCreateView(ListCreateAPIView):
     queryset = AutoParkModel.objects.all()
     serializer_class = AutoParkSerializer
+    permission_classes = (AllowAny,)
 
 
 class AutoParkRetrieveDestroyView(RetrieveUpdateDestroyAPIView):

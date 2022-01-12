@@ -12,8 +12,10 @@ sqlparse = "==0.4.2"
 tzdata = "==2021.5"
 Django = "==4.0"
 django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
+isort = "*"
 
 [requires]
 python_version = "3.9"

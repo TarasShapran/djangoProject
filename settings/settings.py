@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+from .extra_conf import *
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'users.UserModel'
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    'autopark',
-    'cars',
-    'users',
+    'apps.autopark',
+    'apps.cars',
+    'apps.users',
+    'apps.profile'
 
 ]
 
