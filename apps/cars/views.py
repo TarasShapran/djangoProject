@@ -1,11 +1,6 @@
-from django.forms import model_to_dict
-
 from apps.autopark.serializers import AutoParkSerializer
-from rest_framework import mixins, status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import CarModel
 from .serializers import CarSerializer
@@ -14,7 +9,7 @@ from .serializers import CarSerializer
 class CarsListCreateView(ListCreateAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
         year = self.request.query_params.get('year')

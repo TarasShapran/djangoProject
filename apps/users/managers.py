@@ -22,3 +22,13 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True')
         user = self.create_user(email, password, **extra_kwargs)
         return user
+
+    @staticmethod
+    def to_admin(user):
+        user.is_staff = True
+        user.save()
+
+    @staticmethod
+    def to_user(user):
+        user.is_staff = False
+        user.save()
