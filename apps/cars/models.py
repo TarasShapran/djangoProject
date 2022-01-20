@@ -10,6 +10,7 @@ class CarModel(models.Model):
         db_table = 'cars'
         verbose_name = 'car'
         verbose_name_plural = 'cars'
+        ordering = ('id',)
 
     brand = models.CharField(
         max_length=20,

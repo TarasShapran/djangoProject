@@ -26,6 +26,9 @@ class UserListView(ListCreateAPIView):
             return AllowAny(),
         return IsAuthenticated(),
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+
 
 class UserToAdminView(GenericAPIView):
     permission_classes = (IsSuperUser,)
