@@ -27,7 +27,7 @@ class UserSerializer(ModelSerializer):
         profile = validated_data.pop('profile')
         user = UserModel.objects.create_user(**validated_data)
         ProfileModel.objects.create(**profile, user=user)
-        token = JwtUtils.create_token(user)
+        token = JwtUtils('activate', {'minutes': 30}).create_token(user)
         request = self.context.get('request')
         EmailUtils.register_email(user.email, profile.get('name'), token, request)
         return user

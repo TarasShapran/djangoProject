@@ -5,25 +5,28 @@ from django.contrib.auth import get_user_model
 from exceptions.jwt_exception import JwtException
 
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
-from rest_framework_simplejwt.tokens import AccessToken, BlacklistMixin
+from rest_framework_simplejwt.tokens import BlacklistMixin, Token
 
 UserModel = get_user_model()
 
 
-class _AccessToken(BlacklistMixin, AccessToken):
-    token_type = 'action'
-    lifetime = timedelta(minutes=30)
+class _ActionToken(BlacklistMixin, Token):
+    lifetime = timedelta(hours=12)
 
 
 class JwtUtils:
-    @staticmethod
-    def create_token(user):
-        return _AccessToken.for_user(user)
+    def __init__(self, token_type: str, lifetime: dict = None, token_class=_ActionToken):
+        self._TokenClass = token_class
+        if lifetime:
+            self._TokenClass.lifetime = timedelta(**lifetime)
+        self._TokenClass.token_type = token_type
 
-    @staticmethod
-    def validate_token(token):
+    def create_token(self, user):
+        return self._TokenClass.for_user(user)
+
+    def validate_token(self, token):
         try:
-            action_token = _AccessToken(token)
+            action_token = self._TokenClass(token)
             if not OutstandingToken.objects.filter(token=token).exists():
                 raise JwtException
             action_token.check_blacklist()
