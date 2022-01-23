@@ -3,6 +3,7 @@ import os
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
+from enums.email_template import TemplateEnum
 from rest_framework.request import Request
 from rest_framework.reverse import reverse
 
@@ -21,9 +22,9 @@ class EmailUtils:
     @classmethod
     def register_email(cls, address: str, name: str, token: Token, request: Request) -> None:
         uri = request.build_absolute_uri(reverse('auth_activate', args=(token,)))
-        cls._send_mail(address, 'register.html', {'name': name, 'url': uri}, 'Register')
+        cls._send_mail(address, TemplateEnum.REGISTER.value, {'name': name, 'url': uri}, 'Register')
 
     @classmethod
     def recovery_password_email(cls, address: str, token: Token, request: Request) -> None:
         uri = request.build_absolute_uri(reverse('auth_recovery_password'))
-        cls._send_mail(address, 'recovery_password.html', {'token': token, 'url': uri}, 'Recovery password')
+        cls._send_mail(address, TemplateEnum.RECOVERY_PASSWORD.value, {'token': token, 'url': uri}, 'Recovery password')
