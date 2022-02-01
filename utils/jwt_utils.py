@@ -1,5 +1,4 @@
 from datetime import timedelta
-from typing import Optional
 
 from django.contrib.auth import get_user_model
 
@@ -16,10 +15,10 @@ class _ActionToken(BlacklistMixin, Token):
 
 
 class JwtUtils:
-    def __init__(self, token_type: str, life_time: Optional[timedelta] = None, token_class=_ActionToken):
+    def __init__(self, token_type: str, lifetime: dict = None, token_class=_ActionToken):
         self._TokenClass = token_class
-        if life_time:
-            self._TokenClass.lifetime = life_time
+        if lifetime:
+            self._TokenClass.lifetime = timedelta(**lifetime)
         self._TokenClass.token_type = token_type
 
     def create_token(self, user):
