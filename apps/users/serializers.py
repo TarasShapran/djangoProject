@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 
+from apps.apartment.serializers import ApartmentsSerializer
 from apps.profile.models import ProfileModel
 from apps.profile.serializers import ProfileSerializer
 from rest_framework.serializers import ModelSerializer
@@ -13,14 +14,15 @@ UserModel: User = get_user_model()
 
 class UserSerializer(ModelSerializer):
     profile = ProfileSerializer()
+    apartments = ApartmentsSerializer(many=True, read_only=True)
 
     class Meta:
         model = UserModel
         fields = (
             'id', 'email', 'password', 'is_active', 'is_staff', 'last_login', 'is_superuser', 'creates_at',
-            'updated_at', 'profile')
+            'updated_at', 'profile', 'apartments')
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
         }
 
     def create(self, validated_data: dict):

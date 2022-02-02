@@ -3,7 +3,6 @@ from django.db import models
 
 from apps.autopark.models import AutoParkModel
 
-# Create your models here.
 
 class CarModel(models.Model):
     class Meta:
