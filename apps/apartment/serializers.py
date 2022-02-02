@@ -4,8 +4,6 @@ from .models import ApartmentModel
 
 
 class ApartmentsSerializer(ModelSerializer):
-    
     class Meta:
         model = ApartmentModel
-        fields = '__all__'
-
+        exclude = ('user',)
