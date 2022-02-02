@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from enums.action_token import ActionTokenEnum
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, get_object_or_404
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from utils.email_utils import EmailUtils
 from utils.jwt_utils import JwtUtils
@@ -35,4 +35,12 @@ class RecoverPasswordView(GenericAPIView):
         user = get_object_or_404(UserModel, email)
         token = JwtUtils('recovery').create_token(user)
         EmailUtils.recovery_password_email(email, token, self.request)
+        return Response(status=status.HTTP_200_OK)
+
+
+class LogoutView(GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, *args, **kwargs):
+        user = self.request.user
         return Response(status=status.HTTP_200_OK)

@@ -34,7 +34,7 @@ class ApartmentModel(models.Model):
         ])
     number_of_beds = models.IntegerField()
     amount_of_places = models.IntegerField()
-    star_rating = models.IntegerField()
+    star_rating = models.IntegerField(default=0)
     description = models.CharField(
         max_length=500,
         validators=[

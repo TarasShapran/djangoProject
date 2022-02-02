@@ -4,8 +4,9 @@ from .models import ApartmentModel
 
 
 class ApartmentsSerializer(ModelSerializer):
-    
     class Meta:
         model = ApartmentModel
-        fields = '__all__'
-
+        exclude = ('user',)
+        extra_kwargs = {
+            'star_rating': {'read_only': True},
+        }

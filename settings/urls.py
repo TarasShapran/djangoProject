@@ -26,5 +26,6 @@ urlpatterns = [
                   path('users', include('apps.users.urls')),
                   path('autoparks', include('apps.autopark.urls')),
                   path('apartments', include('apps.apartment.urls')),
+                  path('bookings', include('apps.booking.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
