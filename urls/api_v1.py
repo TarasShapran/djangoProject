@@ -20,12 +20,12 @@ from django.urls import include, path
 from settings import settings
 
 urlpatterns = [
-                  path('auth', include('apps.auth.urls')),
+                  path('/auth', include('apps.auth.urls')),
                   # path('admin/', admin.site.urls),
-                  path('cars', include('apps.cars.urls')),
-                  path('users', include('apps.users.urls')),
-                  path('autoparks', include('apps.autopark.urls')),
-                  path('apartments', include('apps.apartment.urls')),
-                  path('bookings', include('apps.booking.urls')),
+                  path('/cars', include('apps.cars.urls')),
+                  path('/users', include('apps.users.urls')),
+                  path('/autoparks', include('apps.autopark.urls')),
+                  path('/apartments', include('apps.apartment.urls')),
+                  path('/bookings', include('apps.booking.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
