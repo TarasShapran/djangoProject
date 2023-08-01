@@ -1,7 +1,11 @@
+from django.utils.decorators import method_decorator
+
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
+
+from drf_yasg.utils import swagger_auto_schema
 
 from .models import ApartmentModel
 from .serializers import ApartmentsSerializer
@@ -13,7 +17,12 @@ class ApartmentsListView(ListAPIView):
     permission_classes = (AllowAny,)
 
 
+# @method_decorator(name='post', decorator=swagger_auto_schema(operation_id='List of Appartment'))
 class ApartmentsCreateView(ListAPIView, GenericAPIView):
+    """
+    post:
+        Create Apartments
+    """
     serializer_class = ApartmentsSerializer
     queryset = ApartmentModel.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly,)
