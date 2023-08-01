@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
+    'drf_yasg',
 
     'apps.autopark',
     'apps.cars',
@@ -61,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'urls.api_v1'
+ROOT_URLCONF = 'urls.urls'
 
 TEMPLATES = [
     {
