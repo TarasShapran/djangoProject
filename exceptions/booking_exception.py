@@ -1,0 +1,2 @@
+class BookingException(Exception):
+    pass
