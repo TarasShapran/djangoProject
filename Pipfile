@@ -14,8 +14,8 @@ Django = "==4.0"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
-django-dotenv = "*"
 django-filter = "*"
+drf-yasg = "==1.21.4"
 
 [dev-packages]
 isort = "*"
